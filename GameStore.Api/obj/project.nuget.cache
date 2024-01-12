@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "IHgn2BQu79c5dTYydPw9rOfOSuhVB0EV3AqHsSN06n6rpZqjuEfJFwV4IJ0Pv1idy5R1A5vEmW2qQnprFpBMwQ==",
+  "dgSpecHash": "Y/kVyGELDfXXkDJ+n//Egqpe0u1jNI5Tf8AS7hteN0VwPNbDZrDA0PzBHXd1g89fE96VwqBTGK/AQWOdl1yOPQ==",
   "success": true,
   "projectFilePath": "C:\\repos\\dotnetacademy\\GameStore\\GameStore.Api\\GameStore.Api.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\oprid\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\oprid\\.nuget\\packages\\minimalapis.extensions\\0.11.0\\minimalapis.extensions.0.11.0.nupkg.sha512",
+    "C:\\Users\\oprid\\.nuget\\packages\\minivalidation\\0.8.0\\minivalidation.0.8.0.nupkg.sha512"
+  ],
   "logs": []
 }
