@@ -2,7 +2,7 @@
 
 namespace GameStore.Api.Repositories;
 
-public class InMemoryRepository
+public class InMemoryRepository : IGameRepository
 {
     List<Game> _games = new List<Game>(){
         new Game() { Id = 1, Name = "Super Mario Bros.", Genre = "Platformer", Price = 59.99m, ReleaseDate = new DateTime(1985, 9, 13),
@@ -25,7 +25,7 @@ public class InMemoryRepository
 
     public Task<IEnumerable<Game>> GetAllGamesAsync()
     {
-        return Task.Run(()=> _games.AsEnumerable());
+        return Task.Run(() => _games.AsEnumerable());
     }
 
     public Game? GetById(int id)
@@ -38,7 +38,7 @@ public class InMemoryRepository
         return game;
     }
 
-    public  bool Delete(int id)
+    public bool Delete(int id)
     {
         var game = GetById(id);
         if (game == null)
@@ -47,9 +47,9 @@ public class InMemoryRepository
         }
 
         _games.Remove(game);
-        return Task.Run(()=> true).Result;
+        return Task.Run(() => true).Result;
     }
-    
+
     public bool Update(int id, Game game)
     {
         var index = _games.FindIndex(g => g.Id == id);
@@ -60,7 +60,7 @@ public class InMemoryRepository
         _games[index] = game;
         return true;
     }
-    
+
     public bool Create(Game game)
     {
         var existingGame = GetById(game.Id);

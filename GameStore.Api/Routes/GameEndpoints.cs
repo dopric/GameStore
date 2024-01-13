@@ -1,5 +1,6 @@
 ﻿// GameEndpoints.cs
 using GameStore.Api.Entities;
+using GameStore.Api.Repositories;
 using GameStore.Api.Services.Contracts;
 
 namespace GameStore.Api.Routes;
@@ -9,17 +10,6 @@ namespace GameStore.Api.Routes;
 /// </summary>
 public static class GameEndpoints
 {
-    private static IGameService _gameService;
-
-    /// <summary>
-    /// Initializes the game service.
-    /// </summary>
-    /// <param name="gameService">The game service to initialize.</param>
-    internal static void Initialize(IGameService gameService)
-    {
-        _gameService = gameService;
-    }
-
     /// <summary>
     /// Maps the endpoints for game related operations.
     /// </summary>
@@ -39,7 +29,7 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapGetGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/", () => _gameService.GetAllGames());
+        routes.MapGet("/api/games/", (IGameRepository repository) => repository.GetAllGamesAsync());
     }
 
     /// <summary>
@@ -48,7 +38,7 @@ public static class GameEndpoints
     /// <param name="routes">The <see cref="IEndpointRouteBuilder"/> to map the endpoint to.</param>
     private static void MapGetGameByIdEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/{id}", (int id) => _gameService.GetAllGames().Result.FirstOrDefault() is { } game ? Results.Ok(game) : Results.NotFound())
+        routes.MapGet("/api/games/{id}", (IGameRepository repository, int id) => repository.GetAllGamesAsync().Result.FirstOrDefault() is { } game ? Results.Ok(game) : Results.NotFound())
             .WithName(Constants.GetGameById);
     }
 
@@ -58,9 +48,9 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapPostGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPost("/", (Game game) =>
+        routes.MapPost("/api/games/", (IGameRepository repository, Game game) =>
         {
-            _gameService.AddGame(game);
+            repository.Create(game);
             return Results.Created($"/api/games/{game.Id}", game);
         });
     }
@@ -71,9 +61,9 @@ public static class GameEndpoints
     /// <param name="routes">The instance of <see cref="IEndpointRouteBuilder"/> used to configure the endpoint routes.</param>
     private static void MapPutGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPut("/{id}", (int id, Game game) =>
+        routes.MapPut("/api/games/{id}", (IGameRepository repository, int id, Game game) =>
         {
-            if (_gameService.UpdateGame(id, game))
+            if (repository.Update(id, game))
             {
                 return Results.Ok(game);
             }
@@ -87,9 +77,9 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapDeleteGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapDelete("/{id}", (int id) =>
+        routes.MapDelete("/api/games/{id}", (IGameRepository repository, int id) =>
         {
-            if (_gameService.DeleteGame(id))
+            if (repository.Delete(id))
             {
                 return Results.NoContent();
             }
