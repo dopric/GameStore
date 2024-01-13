@@ -29,7 +29,7 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapGetGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/api/games/", (IGameRepository repository) => repository.GetAllGamesAsync());
+        routes.MapGet("/api/games/", (IGameRepository repository) => repository.GetAllGamesAsync().Result.Select(g => g.AsDto()));
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public static class GameEndpoints
     /// <param name="routes">The <see cref="IEndpointRouteBuilder"/> to map the endpoint to.</param>
     private static void MapGetGameByIdEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/api/games/{id}", (IGameRepository repository, int id) => repository.GetAllGamesAsync().Result.FirstOrDefault() is { } game ? Results.Ok(game) : Results.NotFound())
+        routes.MapGet("/api/games/{id}", (IGameRepository repository, int id) => repository.GetAllGamesAsync().Result.FirstOrDefault() is { } game ? Results.Ok(game.AsDto()) : Results.NotFound())
             .WithName(Constants.GetGameById);
     }
 
@@ -48,8 +48,9 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapPostGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPost("/api/games/", (IGameRepository repository, Game game) =>
+        routes.MapPost("/api/games/", (IGameRepository repository, GameDto gameDto) =>
         {
+            var game = gameDto.AsEntity();
             repository.Create(game);
             return Results.Created($"/api/games/{game.Id}", game);
         });
@@ -61,8 +62,9 @@ public static class GameEndpoints
     /// <param name="routes">The instance of <see cref="IEndpointRouteBuilder"/> used to configure the endpoint routes.</param>
     private static void MapPutGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPut("/api/games/{id}", (IGameRepository repository, int id, Game game) =>
+        routes.MapPut("/api/games/{id}", (IGameRepository repository, int id, GameDto gameDto) =>
         {
+            var game = gameDto.AsEntity();
             if (repository.Update(id, game))
             {
                 return Results.Ok(game);
