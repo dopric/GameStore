@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Kf07RLXwqXGr1rLd1sO56AxHzhGYz3cG+kMNehXez0gi4gbvO+TWd09ZZE7htkXigF/grI+2xGdQmVMBPTUt8w==",
+  "dgSpecHash": "HVzyB9nXfC0QrDZLZhYrcGuuHLqbRfFGzYg88r79O//LRTmO1kpOPnDFQ8Iixou4IFbVjAFfDlAPzuVyho7IWQ==",
   "success": true,
   "projectFilePath": "C:\\repos\\dotnetacademy\\GameStore\\GameStore.Api\\GameStore.Api.csproj",
   "expectedPackageFiles": [
@@ -49,6 +49,8 @@
     "C:\\Users\\oprid\\.nuget\\packages\\minimalapis.extensions\\0.11.0\\minimalapis.extensions.0.11.0.nupkg.sha512",
     "C:\\Users\\oprid\\.nuget\\packages\\minivalidation\\0.8.0\\minivalidation.0.8.0.nupkg.sha512",
     "C:\\Users\\oprid\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\oprid\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\oprid\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
     "C:\\Users\\oprid\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\oprid\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\oprid\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

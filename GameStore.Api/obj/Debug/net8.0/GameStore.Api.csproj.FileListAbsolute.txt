@@ -134,3 +134,5 @@ C:\repos\dotnetacademy\GameStore\GameStore.Api\obj\Debug\net8.0\refint\GameStore
 C:\repos\dotnetacademy\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.pdb
 C:\repos\dotnetacademy\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.genruntimeconfig.cache
 C:\repos\dotnetacademy\GameStore\GameStore.Api\obj\Debug\net8.0\ref\GameStore.Api.dll
+C:\repos\dotnetacademy\GameStore\GameStore.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\repos\dotnetacademy\GameStore\GameStore.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
