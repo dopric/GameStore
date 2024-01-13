@@ -48,10 +48,10 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapPostGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPost("/api/games/", (IGameRepository repository, GameDto gameDto) =>
+        routes.MapPost("/api/games/", async (IGameRepository repository, GameDto gameDto) =>
         {
             var game = gameDto.AsEntity();
-            repository.Create(game);
+            await repository.CreateAsync(game);
             return Results.Created($"/api/games/{game.Id}", game);
         });
     }
@@ -62,10 +62,10 @@ public static class GameEndpoints
     /// <param name="routes">The instance of <see cref="IEndpointRouteBuilder"/> used to configure the endpoint routes.</param>
     private static void MapPutGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapPut("/api/games/{id}", (IGameRepository repository, int id, GameDto gameDto) =>
+        routes.MapPut("/api/games/{id}", async (IGameRepository repository, int id, GameDto gameDto) =>
         {
             var game = gameDto.AsEntity();
-            if (repository.Update(id, game))
+            if (await repository.UpdateAsync(id, game))
             {
                 return Results.Ok(game);
             }
@@ -79,9 +79,9 @@ public static class GameEndpoints
     /// <param name="routes">The endpoint route builder.</param>
     private static void MapDeleteGameEndpoint(this IEndpointRouteBuilder routes)
     {
-        routes.MapDelete("/api/games/{id}", (IGameRepository repository, int id) =>
+        routes.MapDelete("/api/games/{id}", async (IGameRepository repository, int id) =>
         {
-            if (repository.Delete(id))
+            if (await repository.DeleteAsync(id))
             {
                 return Results.NoContent();
             }

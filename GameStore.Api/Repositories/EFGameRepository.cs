@@ -13,37 +13,37 @@ public class EFGameRepository : IGameRepository
     }
     public async Task<IEnumerable<Game>> GetAllGamesAsync()
     {
-        return _dbContext.Games.AsNoTracking().ToList();
+        return await _dbContext.Games.AsNoTracking().ToListAsync();
     }
 
-    public Game? GetById(int id)
+    public async Task<Game?> GetByIdAsync(int id)
     {
-        return _dbContext.Games.FirstOrDefault(g => g.Id == id);
+        return await _dbContext.Games.FirstOrDefaultAsync(g => g.Id == id);
     }
 
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        if (_dbContext.Games.Any(g => g.Id == id))
+        if (await _dbContext.Games.AnyAsync(g => g.Id == id))
         {
-            _dbContext.Games.Remove(_dbContext.Games.First(g => g.Id == id));
-            _dbContext.SaveChanges();
+             _dbContext.Games.Remove(_dbContext.Games.First(g => g.Id == id));
+            await _dbContext.SaveChangesAsync();
             return true;
         }
 
         return false;
     }
 
-    public bool Update(int id, Game game)
+    public async Task<bool> UpdateAsync(int id, Game game)
     {
-        _dbContext.Games.Update(game);
-        _dbContext.SaveChanges();
+         _dbContext.Games.Update(game);
+        await _dbContext.SaveChangesAsync();
         return true;
     }
 
-    public bool Create(Game game)
+    public async Task<bool> CreateAsync(Game game)
     {
-        _dbContext.Add<Game>(game);
-        _dbContext.SaveChanges();
+        await _dbContext.AddAsync<Game>(game);
+        await _dbContext.SaveChangesAsync();
         return true;
     }
 }

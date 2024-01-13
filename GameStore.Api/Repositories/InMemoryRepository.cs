@@ -28,47 +28,48 @@ public class InMemoryRepository : IGameRepository
         return Task.Run(() => _games.AsEnumerable());
     }
 
-    public Game? GetById(int id)
+    public async Task<Game?> GetByIdAsync(int id)
     {
         var game = _games.FirstOrDefault(g => g.Id == id);
         if (game == null)
         {
             return null;
         }
-        return game;
-    }
 
-    public bool Delete(int id)
+        return await Task.Run(() => game);
+}
+
+    public async Task<bool> DeleteAsync(int id)
     {
-        var game = GetById(id);
+        var game = await GetByIdAsync(id);
         if (game == null)
         {
-            return false;
+            return await Task.Run(()=> false);
         }
 
         _games.Remove(game);
-        return Task.Run(() => true).Result;
+        return await Task.Run(() => true);
     }
 
-    public bool Update(int id, Game game)
+    public async Task<bool> UpdateAsync(int id, Game game)
     {
         var index = _games.FindIndex(g => g.Id == id);
         if (index == -1)
         {
-            return false;
+            return await Task.Run(()=> false);
         }
         _games[index] = game;
-        return true;
+        return await Task.Run(() => true);
     }
 
-    public bool Create(Game game)
+    public async Task<bool> CreateAsync(Game game)
     {
-        var existingGame = GetById(game.Id);
+        var existingGame = await GetByIdAsync(game.Id);
         if (existingGame != null)
         {
-            return false;
+            return await Task.Run(()=> false);
         }
         _games.Add(game);
-        return true;
+        return await Task.Run(() => true);
     }
 }

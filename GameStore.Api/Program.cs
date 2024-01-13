@@ -20,7 +20,7 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
-app.Services.InitializeDb();
+app.Services.InitializeDbAsync();
 
 
 app.MapGameEndpoints();
