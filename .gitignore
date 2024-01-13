@@ -1,1 +1,9 @@
 ﻿/GameStore.Api.Tests/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+bin
+obj
+.github
+.idea
+.vscode
+/GameStore.Api/bin
+/GameStore.Api/obj
+/.vs/GameStore
