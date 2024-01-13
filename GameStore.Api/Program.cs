@@ -11,8 +11,13 @@ var connString = builder.Configuration.GetConnectionString("GameStoreDb");
 builder.Services.AddSqlServer<GameStoreDbContext>(connString);
 //builder.Services.AddDbContext<GameStoreDbContext>(options => options.UseSqlServer(connString));
 
-builder.Services.AddScoped<IGameRepository, InMemoryRepository>();
+if (builder.Environment.IsDevelopment())
+{
+    // we could use a different repository here for testing purposes
+    //builder.Services.AddScoped<IGameRepository, InMemoryRepository>();
+}
 
+builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
 app.Services.InitializeDb();
