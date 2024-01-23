@@ -55,4 +55,58 @@ in Authorization tab select Bearer Token and paste token
 ```commandline
 dotnet user-jwts create --role Admin
 ```
+# Policies
+add new folder Authorization and create new File Policies.cs
 ```c#
+public static class Policies
+{
+    public const string ReadAccess = "read_access";
+    public const string WriteAccess = "WriteAccess";
+}
+```
+## define policy
+```c#
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Policies.ReadAccess, builder => builder.RequireClaim("scope", "games:read"));
+    options.AddPolicy(Policies.WriteAccess, 
+        builder => builder.RequireClaim("scope", "games:write")
+        .RequireRolle("Admin"));
+});
+```
+## use policy
+```c#
+routes.MapDelete("/api/games/{id}", async (IGameRepository repository, int id) =>
+     {
+     // ...
+     }).RequireAuthorization(Policies.WriteAccess);
+```
+## create token with scope
+```commandline
+dotnet user-jwts create --scope "games:write"
+```
+## create token with scope and role
+```commandline
+dotnet user-jwts create --scope "games:write" --role Admin
+```
+## create authorization extension
+```c#
+public static class AuthorizationPolicyBuilderExtensions
+{
+    public static IServiceCollection AddGameStoreAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(Policies.ReadAccess, builder => builder.RequireClaim("scope", "games:read"));
+            options.AddPolicy(Policies.WriteAccess,
+                builder => builder.RequireClaim("scope", "games:write")
+                    .RequireRole("Admin"));
+        });
+
+        return services;
+    }
+}
+# in program.cs
+builder.Services.AddGameStoreAuthorization();
+```
