@@ -1,15 +1,17 @@
-﻿namespace GameStore.Api.Entities;
+﻿using GameStore.Api.Entities;
 
-public static class EntityExtensions
+namespace GameStore.Api.Entities;
+
+public static class GameExtensions
 {
     public static GameDto AsDto(this Game game)
     {
         return new GameDto(game.Id, game.Name, game.Genre, game.Price, game.ReleaseDate, game.ImageUri);
     }
-
+    
     public static Game AsEntity(this GameDto game)
     {
-        return new Game()
+        return new Game
         {
             Name = game.Name,
             Genre = game.Genre,

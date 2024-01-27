@@ -1,5 +1,4 @@
 using GameStore.Api;
-using GameStore.Api.Data;
 using GameStore.Api.Repositories;
 using GameStore.Api.Routes;
 
@@ -17,10 +16,13 @@ if (builder.Environment.IsDevelopment())
     //builder.Services.AddScoped<IGameRepository, InMemoryRepository>();
 }
 
-builder.Services.AddRepositories(builder.Configuration);
+builder.Services.AddScoped<IGameRepository, EFGameRepository>();
+// builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
-app.Services.InitializeDbAsync();
+
+// for some unknown reason, git removed some files and folders from the project
+// app.Services.InitializeDbAsync();
 
 
 app.MapGameEndpoints();
